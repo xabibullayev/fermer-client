@@ -1,6 +1,4 @@
 import styles from "./Footer.module.scss";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import MailIcon from "@mui/icons-material/Mail";
 
 export default function Footer() {
   return (
@@ -11,11 +9,11 @@ export default function Footer() {
           <h1>FERMER-SHOP</h1>
         </div>
         <div className={styles.link}>
-          <LocalPhoneIcon />
+          <img src="/phone.png" alt="" />
           +998 99 488 97 98
         </div>
         <div className={styles.link}>
-          <MailIcon />
+          <img src="/mail.png" alt="" />
           nurilla.gulimbetov@gmail.com
         </div>
       </div>
