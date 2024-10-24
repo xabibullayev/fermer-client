@@ -53,21 +53,21 @@ export default function Products() {
             <h1>Kartoshka</h1>
             <p>100 kg</p>
             <span>5000 SWM</span>
-            <button>Toliq ko'riw</button>
+            <button>Toliq kóriw</button>
           </div>
           <div className={styles.item}>
             <img src="/makke.jpg" alt="" />
             <h1>Kartoshka</h1>
             <p>100 kg</p>
             <span>5000 SWM</span>
-            <button>Toliq ko'riw</button>
+            <button>Toliq kóriw</button>
           </div>
           <div className={styles.item}>
             <img src="/juzim.jpg" alt="" />
             <h1>Juzim</h1>
             <p>100 kg</p>
             <span>5000 SWM</span>
-            <button>Toliq ko'riw</button>
+            <button>Toliq kóriw</button>
           </div>
         </div>
       </div>

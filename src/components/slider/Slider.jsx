@@ -12,7 +12,7 @@ export default function Slider() {
           <div>
             <img src="/vegetables.png" />
           </div>
-          <h2>Paliz o'nimleri</h2>
+          <h2>Palız ónimleri</h2>
         </div>
         <div className={styles.item}>
           <div>
@@ -24,7 +24,7 @@ export default function Slider() {
           <div>
             <img src="/seeds.png" />
           </div>
-          <h2>Danli o'nimler</h2>
+          <h2>Dánli ónimler</h2>
         </div>
       </div>
     </div>
