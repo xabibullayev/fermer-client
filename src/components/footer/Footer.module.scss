@@ -1,0 +1,22 @@
+.footer {
+  padding: 50px 200px;
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .logo {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .link {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      color: #9d9d9d;
+    }
+  }
+}
