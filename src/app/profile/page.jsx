@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-export default function Profile() {
+function MyComponent() {
   const searchParams = useSearchParams();
   let userId = searchParams.get("userId");
   const [image, setImage] = useState(null);
@@ -201,4 +201,10 @@ export default function Profile() {
       </div>
     </Suspense>
   );
+}
+
+export default function Profile() {
+  <Suspense fallback={<div>Loading...</div>}>
+    <MyComponent />
+  </Suspense>;
 }
