@@ -1,6 +1,27 @@
+"use client";
+import { useEffect, useState } from "react";
 import styles from "./Products.module.scss";
+import axios from "axios";
+import Link from "next/link";
 
 export default function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await axios
+        .get(`http://localhost:5000/api/products`)
+        .then((res) => {
+          setProducts(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className={styles.products}>
       <div className={styles.filter}>
@@ -48,27 +69,36 @@ export default function Products() {
           <p>Siz izlegen ónimler</p>
         </div>
         <div className={styles.row}>
-          <div className={styles.item}>
-            <img src="/kartoshka.jpg" alt="" />
-            <h1>Kartoshka</h1>
-            <p>100 kg</p>
-            <span>5000 SWM</span>
-            <button>Toliq kóriw</button>
-          </div>
-          <div className={styles.item}>
-            <img src="/makke.jpg" alt="" />
-            <h1>Kartoshka</h1>
-            <p>100 kg</p>
-            <span>5000 SWM</span>
-            <button>Toliq kóriw</button>
-          </div>
-          <div className={styles.item}>
-            <img src="/juzim.jpg" alt="" />
-            <h1>Juzim</h1>
-            <p>100 kg</p>
-            <span>5000 SWM</span>
-            <button>Toliq kóriw</button>
-          </div>
+          {products?.map((product) => (
+            <div className={styles.item} key={product._id}>
+              <div className={styles.img}>
+                <img
+                  src={`http://localhost:5000/Images/${product.image}`}
+                  alt=""
+                />
+              </div>
+              <div className={styles.info}>
+                <h1>{product.title}</h1>
+                <p>{product.address}</p>
+                <span>{product.price} SWM</span>
+                <Link
+                  href={{
+                    pathname: "/single-product",
+                    query: {
+                      title: product.title,
+                      price: product.price,
+                      address: product.address,
+                      phone: product.phone,
+                      desc: product.desc,
+                      image: product.image,
+                    },
+                  }}
+                >
+                  Toliq kóriw
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

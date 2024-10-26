@@ -1,7 +1,29 @@
+"use client";
 import Link from "next/link";
 import styles from "./Navbar.module.scss";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [id, setId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  // Check for token in localStorage on component mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(token);
+    setId(token);
+  }, []);
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    router.push("/"); // Redirect to home or login page
+    setId("");
+  };
+
   return (
     <div className={styles.navbar}>
       <div className={styles.top}>
@@ -16,8 +38,26 @@ export default function Navbar() {
         </div>
 
         <div className={styles.auth}>
-          <Link href="/login">Kiriw</Link>
-          <Link href="/register">Registraciya</Link>
+          {isLoggedIn ? (
+            <>
+              <Link
+                href={{
+                  pathname: "/profile",
+                  query: {
+                    userId: id,
+                  },
+                }}
+              >
+                Profil
+              </Link>
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">Kiriw</Link>
+              <Link href="/register">Registraciya</Link>
+            </>
+          )}
         </div>
       </div>
 
