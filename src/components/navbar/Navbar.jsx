@@ -50,7 +50,7 @@ export default function Navbar() {
               >
                 Profil
               </Link>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}>Shıǵıw</button>
             </>
           ) : (
             <>

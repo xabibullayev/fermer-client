@@ -21,7 +21,7 @@ export default function AddProduct() {
 
       <div className={styles.top}>
         <form onSubmit={handleSubmit}>
-          <h1>Taza onim qosiw</h1>
+          <h1>Taza ónim qosiw</h1>
 
           <div className={styles.upload}>
             <label htmlFor="file">
