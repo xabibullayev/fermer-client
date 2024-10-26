@@ -3,8 +3,9 @@ import Navbar from "@/components/navbar/Navbar";
 import styles from "./page.module.scss";
 import Footer from "@/components/footer/Footer";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function SingleProduct() {
+function MyComponent() {
   const searchParams = useSearchParams();
   let title = searchParams.get("title");
   let price = searchParams.get("price");
@@ -36,4 +37,10 @@ export default function SingleProduct() {
       <Footer />
     </div>
   );
+}
+
+export default function SingleProduct() {
+  <Suspense fallback={<div>Loading...</div>}>
+    <MyComponent />
+  </Suspense>;
 }
