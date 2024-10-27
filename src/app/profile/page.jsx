@@ -4,7 +4,7 @@ import styles from "./page.module.scss";
 import Footer from "@/components/footer/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
 
 export default function Profile() {
@@ -27,12 +27,8 @@ function MyComponent() {
   });
   const [products, setProducts] = useState([]);
 
-  const router = useRouter();
-  const { query } = router;
-
-  const userId = query?.userId;
-
-  console.log(userId, "Userid");
+  const searchParams = useSearchParams();
+  let userId = searchParams.get("userId");
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -60,7 +56,7 @@ function MyComponent() {
       return;
     }
 
-    formData.append("userId", id);
+    formData.append("userId", userId);
     formData.append("title", data.title);
     formData.append("price", data.price);
     formData.append("address", data.address);
@@ -85,6 +81,8 @@ function MyComponent() {
           (product) => product._id !== productId
         );
         setProducts(updatedProducts);
+
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +91,6 @@ function MyComponent() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log(`http://localhost:5000/api/products/${userId}`);
       await axios
         .get(`http://localhost:5000/api/products/sort/${userId}`)
         .then((res) => {
