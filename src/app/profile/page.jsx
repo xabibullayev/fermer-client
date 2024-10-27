@@ -4,12 +4,18 @@ import styles from "./page.module.scss";
 import Footer from "@/components/footer/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import React, { Suspense } from "react";
+
+export default function Profile() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <MyComponent />
+    </Suspense>
+  );
+}
 
 function MyComponent() {
-  const searchParams = useSearchParams();
-  let userId = searchParams.get("userId");
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [data, setData] = useState({
@@ -20,6 +26,13 @@ function MyComponent() {
     desc: "",
   });
   const [products, setProducts] = useState([]);
+
+  const router = useRouter();
+  const { query } = router;
+
+  const userId = query?.userId;
+
+  console.log(userId, "Userid");
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -95,116 +108,108 @@ function MyComponent() {
   }, [userId]);
 
   return (
-    <Suspense>
-      <div className={styles.profile}>
-        <Navbar />
-        <div className={styles.main}>
-          <div className={styles.top}>
-            <form onSubmit={handleSubmit}>
-              <h1>Taza ónim qosiw</h1>
+    <div className={styles.profile}>
+      <Navbar />
+      <div className={styles.main}>
+        <div className={styles.top}>
+          <form onSubmit={handleSubmit}>
+            <h1>Taza ónim qosiw</h1>
 
-              <div className={styles.upload}>
-                <label htmlFor="file">
-                  <img src="/upload.png" alt="" />
-                </label>
+            <div className={styles.upload}>
+              <label htmlFor="file">
+                <img src="/upload.png" alt="" />
+              </label>
+              <input
+                id="file"
+                hidden
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              <div className={styles.images}>
+                <div>
+                  {image && (
+                    <>
+                      <img src={image} alt="Uploaded" width="150" />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <div>
                 <input
-                  id="file"
-                  hidden
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-                <div className={styles.images}>
-                  <div>
-                    {image && (
-                      <>
-                        <img src={image} alt="Uploaded" width="150" />
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Onim"
-                    name="title"
-                    value={data.title}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Bahasi"
-                    name="price"
-                    value={data.price}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Manzil"
-                    name="address"
-                    value={data.address}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Telefon nomer"
-                    name="phone"
-                    value={data.phone}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <textarea
-                  placeholder="Qosimsha..."
-                  name="desc"
-                  value={data.desc}
+                  type="text"
+                  placeholder="Onim"
+                  name="title"
+                  value={data.title}
                   onChange={handleInputChange}
-                ></textarea>
+                />
+                <input
+                  type="text"
+                  placeholder="Bahasi"
+                  name="price"
+                  value={data.price}
+                  onChange={handleInputChange}
+                />
               </div>
-
-              <button>Saqlaw</button>
-            </form>
-          </div>
-
-          <div className={styles.products}>
-            <h1>Menin ónimlerim</h1>
-            {products?.map((product) => (
-              <div className={styles.item} key={product._id}>
-                <div className={styles.image}>
-                  <img
-                    src={`http://localhost:5000/Images/${product.image}`}
-                    alt=""
-                  />
-                </div>
-
-                <div className={styles.info}>
-                  <h2>{product.title}</h2>
-                  <h3>{product.address}</h3>
-                  <span>{product.price}</span>
-                  <span>{product.phone}</span>
-                  <p>{product.desc}</p>
-                  <div className={styles.buttons}>
-                    <button onClick={() => handleDelete(product._id)}>
-                      Óshiriw
-                    </button>
-                  </div>
-                </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Manzil"
+                  name="address"
+                  value={data.address}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  placeholder="Telefon nomer"
+                  name="phone"
+                  value={data.phone}
+                  onChange={handleInputChange}
+                />
               </div>
-            ))}
-          </div>
+              <textarea
+                placeholder="Qosimsha..."
+                name="desc"
+                value={data.desc}
+                onChange={handleInputChange}
+              ></textarea>
+            </div>
+
+            <button>Saqlaw</button>
+          </form>
         </div>
-        <Footer />
-      </div>
-    </Suspense>
-  );
-}
 
-export default function Profile() {
-  <Suspense fallback={<div>Loading...</div>}>
-    <MyComponent />
-  </Suspense>;
+        <div className={styles.products}>
+          <h1>Menin ónimlerim</h1>
+          {products?.map((product) => (
+            <div className={styles.item} key={product._id}>
+              <div className={styles.image}>
+                <img
+                  src={`http://localhost:5000/Images/${product.image}`}
+                  alt=""
+                />
+              </div>
+
+              <div className={styles.info}>
+                <h2>{product.title}</h2>
+                <h3>{product.address}</h3>
+                <span>{product.price}</span>
+                <span>{product.phone}</span>
+                <p>{product.desc}</p>
+                <div className={styles.buttons}>
+                  <button onClick={() => handleDelete(product._id)}>
+                    Óshiriw
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 }

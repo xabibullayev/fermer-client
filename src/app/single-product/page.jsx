@@ -3,7 +3,15 @@ import Navbar from "@/components/navbar/Navbar";
 import styles from "./page.module.scss";
 import Footer from "@/components/footer/Footer";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
+
+export default function SingleProduct() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <MyComponent />
+    </Suspense>
+  );
+}
 
 function MyComponent() {
   const searchParams = useSearchParams();
@@ -20,27 +28,23 @@ function MyComponent() {
     <div className={styles.singleProduct}>
       <Navbar />
 
-      <div className={styles.main}>
-        <div className={styles.left}>
-          <img src={`http://localhost:5000/Images/${image}`} alt="" />
-        </div>
+      {title && (
+        <div className={styles.main}>
+          <div className={styles.left}>
+            <img src={`http://localhost:5000/Images/${image}`} alt="" />
+          </div>
 
-        <div className={styles.right}>
-          <p>{title}</p>
-          <p>{price} SWM</p>
-          <p>{address}</p>
-          <p>{phone}</p>
-          <p>{desc}</p>
+          <div className={styles.right}>
+            <p>{title}</p>
+            <p>{price} SWM</p>
+            <p>{address}</p>
+            <p>{phone}</p>
+            <p>{desc}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <Footer />
     </div>
   );
-}
-
-export default function SingleProduct() {
-  <Suspense fallback={<div>Loading...</div>}>
-    <MyComponent />
-  </Suspense>;
 }
