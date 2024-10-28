@@ -10,7 +10,7 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios
-        .get(`http://localhost:5000/api/products`)
+        .get(`http://45.138.158.174:5000/api/products`)
         .then((res) => {
           setProducts(res.data);
         })
@@ -73,7 +73,7 @@ export default function Products() {
             <div className={styles.item} key={product._id}>
               <div className={styles.img}>
                 <img
-                  src={`http://localhost:5000/Images/${product.image}`}
+                  src={`http://45.138.158.174:5000/Images/${product.image}`}
                   alt=""
                 />
               </div>

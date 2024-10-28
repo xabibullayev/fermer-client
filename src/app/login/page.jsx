@@ -17,7 +17,10 @@ export default function Login() {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:5000/api/users/login", { username, password })
+      .post("http://45.138.158.174:5000/api/users/login", {
+        username,
+        password,
+      })
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.data.token); // Store JWT token

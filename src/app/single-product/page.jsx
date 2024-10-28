@@ -31,7 +31,7 @@ function MyComponent() {
       {title && (
         <div className={styles.main}>
           <div className={styles.left}>
-            <img src={`http://localhost:5000/Images/${image}`} alt="" />
+            <img src={`http://45.138.158.174:5000/Images/${image}`} alt="" />
           </div>
 
           <div className={styles.right}>

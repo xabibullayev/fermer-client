@@ -16,6 +16,7 @@ export default function Profile() {
 }
 
 function MyComponent() {
+  const [refresh, setRefresh] = useState(false);
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [data, setData] = useState({
@@ -47,6 +48,7 @@ function MyComponent() {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     const formData = new FormData();
 
     // Append the image file to FormData
@@ -64,9 +66,10 @@ function MyComponent() {
     formData.append("desc", data.desc);
 
     await axios
-      .post("http://localhost:5000/api/products", formData)
+      .post("http://45.138.158.174:5000/api/products", formData)
       .then((res) => {
         console.log(res.data);
+        setRefresh(!refresh);
       })
       .catch((err) => {
         console.log(err);
@@ -75,7 +78,7 @@ function MyComponent() {
 
   const handleDelete = async (productId) => {
     await axios
-      .delete(`http://localhost:5000/api/products/${productId}`)
+      .delete(`http://45.138.158.174:5000/api/products/${productId}`)
       .then((res) => {
         const updatedProducts = products.filter(
           (product) => product._id !== productId
@@ -92,7 +95,7 @@ function MyComponent() {
   useEffect(() => {
     const fetchProducts = async () => {
       await axios
-        .get(`http://localhost:5000/api/products/sort/${userId}`)
+        .get(`http://45.138.158.174:5000/api/products/sort/${userId}`)
         .then((res) => {
           setProducts(res.data);
         })
@@ -102,7 +105,7 @@ function MyComponent() {
     };
 
     fetchProducts();
-  }, [userId]);
+  }, [refresh]);
 
   return (
     <div className={styles.profile}>
@@ -185,7 +188,7 @@ function MyComponent() {
             <div className={styles.item} key={product._id}>
               <div className={styles.image}>
                 <img
-                  src={`http://localhost:5000/Images/${product.image}`}
+                  src={`http://45.138.158.174:5000/Images/${product.image}`}
                   alt=""
                 />
               </div>
